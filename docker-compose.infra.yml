@@ -1,0 +1,86 @@
+---
+version: '2'
+services:
+
+  # setup shared infrastructure
+  rabbitmq:
+    container_name: rabbitmq
+    build:
+      context: ./infra/rabbitmq
+    image: hailo/rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes_from:
+      - data
+
+  cassandra:
+    container_name: cassandra
+    build:
+      context: ./infra/cassandra
+    image: hailo/cassandra:latest
+    ports:
+      - "7000:7000"
+      - "7001:7001"
+      - "7199:7199"
+      - "9042:9042"
+      - "9160:9160"
+    volumes_from:
+      - data
+
+
+  cassandra_bootstrap:
+    container_name: cassandra_bootstrap
+    build:
+      context: ./infra/cassandra
+    depends_on:
+      - cassandra
+    command: "/cassandra-bootstrap"
+    volumes_from:
+      - data
+
+  memcache:
+    container_name: memcache
+    image: memcached:latest
+    ports:
+      - "11211:11211"
+      - "1211:1211"
+
+  zookeeper:
+    container_name: zookeeper
+    image: mesoscloud/zookeeper
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    expose:
+      - "2181"
+
+  nsqlookupd:
+    container_name: nsqlookupd
+    image: nsqio/nsq
+    ports:
+      - "4160:4160"
+      - "4161:4161"
+    expose:
+      - "4160"
+      - "4161"
+    command: "/nsqlookupd"
+
+  nsqd:
+    container_name: nsqd
+    image: nsqio/nsq
+    ports:
+      - "4150:4150"
+      - "4151:4151"
+    expose:
+      - "4150"
+      - "4151"
+    command: "/nsqd --lookupd-tcp-address=nsqlookupd:4160"
+
+  nsqadmin:
+    container_name: nsqadmin
+    image: nsqio/nsq
+    ports:
+      - "4171:4171"
+    command: "/nsqadmin --lookupd-http-address=nsqlookupd:4160"

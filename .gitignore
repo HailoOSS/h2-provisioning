@@ -1,0 +1,3 @@
+data/cassandra/*
+data/rabbitmq/*
+data/opt/hailo/bootstrapped/

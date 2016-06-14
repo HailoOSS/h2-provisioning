@@ -1,0 +1,46 @@
+---
+version: '2'
+services:
+
+  config-service:
+    container_name: config-service
+    image: 688390856993.dkr.ecr.eu-west-1.amazonaws.com/config:latest
+    ports:
+      - "8097:8097"
+    expose:
+      - "8097"
+    environment:
+      - H2_CONFIG_SERVICE_ADDR=http://localhost:8097
+      - H2_CONFIG_SERVICE_CASSANDRA=cassandra:9160
+    depends_on:
+      - rabbitmq
+      - zookeeper
+      - cassandra
+    volumes_from:
+      - data
+
+  discovery-service:
+    container_name: discovery-service
+    image: 688390856993.dkr.ecr.eu-west-1.amazonaws.com/discovery:latest
+    environment:
+      - H2_CONFIG_SERVICE_ADDR=http://config-service:8097
+    depends_on:
+      - config-service
+      - rabbitmq
+      - zookeeper
+    volumes_from:
+      - data
+
+  login-service:
+    container_name: go-login-service
+    image: 688390856993.dkr.ecr.eu-west-1.amazonaws.com/login:latest
+    environment:
+      - H2_CONFIG_SERVICE_ADDR=http://config-service:8097
+    depends_on:
+      - config-service
+      - rabbitmq
+      - zookeeper
+    volumes_from:
+      - data
+
+
