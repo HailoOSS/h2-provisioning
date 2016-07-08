@@ -6,7 +6,7 @@ Automated provisioning of the H2 platform with Docker.
 
 * awscli version 1.10 or greater
 * docker 1.11 or greater
-* docker-machine or docker for mac
+* [docker for mac](https://docs.docker.com/engine/installation/mac/)
 * docker-compose 1.7.1 or greater
 
 You should also have the file `~/.aws/credentials` which contains:
@@ -30,16 +30,6 @@ region = eu-west-1
 ```
 git clone https://github.com/hailocab/H2-provisioning.git ~/h2-provisioning
 cd ~/h2-provisioning
-```
-
-If you're using docker-machine:
-```
-docker-machine create default
-eval "$(docker-machine env default)"
-```
-
-Finally:
-```
 make
 ```
 This will take approx 10min to build.
