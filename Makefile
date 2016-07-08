@@ -30,7 +30,7 @@ down :
 
 # Clean purges the entire setup giving you a fresh start
 clean : down
-	rm -rf ./data/cassandra/* \
-		./data/rabbitmq/* \
+	rm -rf ./data/cassandra/ \
+		./data/rabbitmq/ \
 		./data/opt/hailo/var/log/* \
 		./data/opt/hailo/bootstrapped/*

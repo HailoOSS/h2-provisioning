@@ -36,6 +36,20 @@ This will take approx 10min to build.
 Once provisioning has completed you will have a fully functional H2 platform
 available locally.
 
+Connect via `hshell`:
+```
+hshell
+h2o Interactive Shell
+> host localhost
+Connecting to amqp://hailo:hailo@localhost:5672
+> ls
+Services:
+   com.hailocab.kernel.discovery
+   com.hailocab.service.config
+   com.hailocab.service.login
+>
+```
+
 * Username: admin
 * Password: Password1
 

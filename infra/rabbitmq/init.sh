@@ -18,7 +18,7 @@ rabbitmqctl set_user_tags hailo administrator ; \
 # rabbitmqctl set_permissions -p <vhostname> <username> ".*" ".*" ".*"
 rabbitmqctl set_permissions -p / hailo ".*" ".*" ".*" ; \
 
-touch bootstrap_file ; \
+touch $bootstrap_file ; \
 ) &
 fi
 rabbitmq-server $@
