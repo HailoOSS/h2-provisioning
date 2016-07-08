@@ -25,8 +25,8 @@ services:
       - "7199:7199"
       - "9042:9042"
       - "9160:9160"
-    volumes_from:
-      - data
+#    volumes_from:
+#      - data
 
 
   cassandra_bootstrap:

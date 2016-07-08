@@ -12,6 +12,7 @@ services:
     environment:
       - H2_CONFIG_SERVICE_ADDR=http://localhost:8097
       - H2_CONFIG_SERVICE_CASSANDRA=cassandra:9160
+      - BOXEN_RABBITMQ_URL=amqp://hailo:hailo@rabbitmq:5672
     depends_on:
       - rabbitmq
       - zookeeper
@@ -24,6 +25,7 @@ services:
     image: 688390856993.dkr.ecr.eu-west-1.amazonaws.com/discovery:latest
     environment:
       - H2_CONFIG_SERVICE_ADDR=http://config-service:8097
+      - BOXEN_RABBITMQ_URL=amqp://hailo:hailo@rabbitmq:5672
     depends_on:
       - config-service
       - rabbitmq
@@ -36,6 +38,7 @@ services:
     image: 688390856993.dkr.ecr.eu-west-1.amazonaws.com/login:latest
     environment:
       - H2_CONFIG_SERVICE_ADDR=http://config-service:8097
+      - BOXEN_RABBITMQ_URL=amqp://hailo:hailo@rabbitmq:5672
     depends_on:
       - config-service
       - rabbitmq
